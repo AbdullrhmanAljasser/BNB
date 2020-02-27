@@ -49,12 +49,14 @@ class BNB():
             totm= totmt/totmb
             totm=np.log(totm)
             leftS = features[i]@tot
-            RighS = (1-features[i])@totm
+            RighS = (1-features[i]  )@totm
             logL = leftS + RighS
             logL = logL + np.log(self._theta_one/self._theta_zero)
             predL.append(logL)
         
-        return np.sign(np.array(predL))
+        x = np.sign(np.array(predL))
+        x[x<0] = 0
+        return x
         
     def eval_acc(self,features,targets):
         pred = self.predict(features)
